@@ -19,7 +19,12 @@ const Button: FC<propTypes> = ({
   ...props
 }) => {
   return (
-    <MUIButton variant={variant} disableElevation {...props}>
+    <MUIButton
+      variant={variant}
+      disableElevation
+      {...props}
+      sx={{ borderRadius: "6px" }}
+    >
       {children}
     </MUIButton>
   );

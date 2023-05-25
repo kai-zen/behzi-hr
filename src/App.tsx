@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { Paper, Box } from "@mui/material";
 import { Button, Container, Tabs } from "./components";
-import { Add } from "@mui/icons-material";
+import { Add, Print } from "@mui/icons-material";
 import CreateDailyReportModal from "./modals/daily/Create";
 import { dailyReportType } from "./helpers/types";
 import { DailySubmitReviewReportCard } from "./containers";
@@ -13,7 +13,7 @@ const App: FC = () => {
 
   return (
     <Paper square elevation={0}>
-      <Container>
+      <Container sx={{ my: "20px" }}>
         <Box
           sx={{
             display: "flex",
@@ -38,16 +38,21 @@ const App: FC = () => {
             alignItems: "flex-start",
           }}
         >
-          <Button
-            startIcon={<Add />}
-            variant="outlined"
-            onClick={() => setOpenCreate(true)}
-          >
-            افزودن مورد جدید
-          </Button>
           {submittedItems.map((item, index) => (
             <DailySubmitReviewReportCard data={item} key={index} />
           ))}
+          <Box className="flex-8">
+            <Button startIcon={<Add />} onClick={() => setOpenCreate(true)}>
+              افزودن مورد جدید
+            </Button>
+            <Button
+              startIcon={<Print />}
+              variant="outlined"
+              onClick={() => setOpenCreate(true)}
+            >
+              دریافت گزارش
+            </Button>
+          </Box>
         </Box>
       </Container>
       <CreateDailyReportModal
