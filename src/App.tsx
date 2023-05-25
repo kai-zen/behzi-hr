@@ -1,19 +1,30 @@
 import { FC, useState } from "react";
-import { Paper, Box } from "@mui/material";
+import { Paper, Box, Typography } from "@mui/material";
 import { Button, Container, Tabs } from "./components";
-import { Add, Print } from "@mui/icons-material";
+import { Add, Person, Print } from "@mui/icons-material";
 import CreateDailyReportModal from "./modals/daily/Create";
-import { dailyReportType } from "./helpers/types";
+import { MUIDate, dailyReportType } from "./helpers/types";
 import { DailySubmitReviewReportCard } from "./containers";
+import BasicDatePicker from "./components/DateInput";
 
 const App: FC = () => {
   const [activeTab, setActiveTab] = useState<number>(1);
   const [openCreate, setOpenCreate] = useState<boolean>(false);
   const [submittedItems, setSubmittedItems] = useState<dailyReportType[]>([]);
+  const [startDate, setStartDate] = useState<MUIDate>();
 
   return (
     <Paper square elevation={0}>
       <Container sx={{ my: "20px" }}>
+        <Typography
+          variant="h5"
+          sx={{ textAlign: "center", my: "20px", fontWeight: "600" }}
+        >
+          سامانه گزارش دهی پروژه{" "}
+          <Box component="span" sx={{ color: "primary.main" }}>
+            بهزی
+          </Box>
+        </Typography>
         <Box
           sx={{
             display: "flex",
@@ -26,7 +37,7 @@ const App: FC = () => {
             onChange={setActiveTab}
             tabItems={["روزانه", "ماهانه", "هفتگی"]}
           />
-          <Button>اطلاعات کاربری</Button>
+          <Button startIcon={<Person />}>اطلاعات کاربری</Button>
         </Box>
         <Box
           sx={{
@@ -38,6 +49,10 @@ const App: FC = () => {
             alignItems: "flex-start",
           }}
         >
+          <BasicDatePicker
+            value={startDate}
+            onChange={(val) => val && setStartDate(val)}
+          />
           {submittedItems.map((item, index) => (
             <DailySubmitReviewReportCard data={item} key={index} />
           ))}

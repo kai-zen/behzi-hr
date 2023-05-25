@@ -19,7 +19,7 @@ const DailySubmitReviewReportCard: FC<propTypes> = ({ data }) => {
         width: "100%",
         display: "flex",
         flexDirection: "column",
-        gap: "16px",
+        gap: "12px",
       }}
       elevation={0}
     >
@@ -40,18 +40,18 @@ const DailySubmitReviewReportCard: FC<propTypes> = ({ data }) => {
         {items.map((item, index) => (
           <Box
             key={index}
-            sx={{ display: "flex", alignItems: "center", gap: "8px" }}
+            sx={{ display: "flex", alignItems: "center", gap: "4px" }}
           >
             <Box
               sx={{
-                width: "8px",
-                height: "8px",
-                borderRadius: "4px",
+                width: "4px",
+                height: "4px",
+                borderRadius: "2px",
                 bgcolor: "primary.main",
                 opacity: ".75",
               }}
             />
-            <Typography>{item}</Typography>
+            <Typography variant="caption">{item}</Typography>
           </Box>
         ))}
       </Box>

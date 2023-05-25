@@ -1,15 +1,16 @@
-import { FC, ChangeEvent, KeyboardEvent } from "react";
+import { FC } from "react";
 import { TextField } from "@mui/material";
+import { changeHandler, keydownHandler } from "../helpers/types";
 
 interface propTypes {
   error?: string;
   label?: string;
   name?: string;
   value?: string;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: changeHandler;
   multiline?: boolean;
   rows?: number;
-  onKeydown?: (e: KeyboardEvent<HTMLInputElement>) => void;
+  onKeydown?: keydownHandler;
 }
 
 const TextInput: FC<propTypes> = ({ error, ...props }) => {
