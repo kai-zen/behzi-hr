@@ -2,9 +2,14 @@ import { FC, useState } from "react";
 import { Paper, Box } from "@mui/material";
 import { Button, Container, Tabs } from "./components";
 import { Add } from "@mui/icons-material";
+import CreateDailyReportModal from "./modals/daily/Create";
+import { dailyReportType } from "./helpers/types";
+import { DailySubmitReviewReportCard } from "./containers";
 
 const App: FC = () => {
   const [activeTab, setActiveTab] = useState<number>(1);
+  const [openCreate, setOpenCreate] = useState<boolean>(false);
+  const [submittedItems, setSubmittedItems] = useState<dailyReportType[]>([]);
 
   return (
     <Paper square elevation={0}>
@@ -23,12 +28,33 @@ const App: FC = () => {
           />
           <Button>اطلاعات کاربری</Button>
         </Box>
-        <Box sx={{ my: "40px" }}>
-          <Button startIcon={<Add />} variant="outlined">
+        <Box
+          sx={{
+            my: "40px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "24px",
+            width: "100%",
+            alignItems: "flex-start",
+          }}
+        >
+          <Button
+            startIcon={<Add />}
+            variant="outlined"
+            onClick={() => setOpenCreate(true)}
+          >
             افزودن مورد جدید
           </Button>
+          {submittedItems.map((item, index) => (
+            <DailySubmitReviewReportCard data={item} key={index} />
+          ))}
         </Box>
       </Container>
+      <CreateDailyReportModal
+        open={openCreate}
+        handleClose={() => setOpenCreate(false)}
+        submit={(item) => setSubmittedItems((prev) => [...prev, item])}
+      />
     </Paper>
   );
 };

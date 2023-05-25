@@ -1,8 +1,9 @@
 import { FC } from "react";
 import { Dialog, Box, Typography } from "@mui/material";
-import { TextInput } from "../../components";
+import { Button, TextInput } from "../../components";
 import { useFormik } from "formik";
 import dailyReportFormSchema from "../../helpers/schema/dailyReport";
+import { CheckCircle } from "@mui/icons-material";
 
 interface propTypes {
   open: boolean;
@@ -43,7 +44,18 @@ const CreateDailyReportModal: FC<propTypes> = ({
 
   return (
     <Dialog onClose={handleClose} open={open}>
-      <Box component="form" onSubmit={handleSubmit}>
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
+        sx={{
+          p: "24px",
+          display: "flex",
+          width: "600px",
+          flexDirection: "column",
+          gap: "24px",
+          alignItems: "flex-start",
+        }}
+      >
         <TextInput
           label="عنوان"
           name="title"
@@ -69,6 +81,9 @@ const CreateDailyReportModal: FC<propTypes> = ({
           multiline
           rows={4}
         />
+        <Button type="submit" startIcon={<CheckCircle />}>
+          ثبت گزارش
+        </Button>
       </Box>
     </Dialog>
   );
