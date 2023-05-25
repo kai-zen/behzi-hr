@@ -1,11 +1,13 @@
-import { FC, useState } from "react";
-import { Paper, Box, Typography } from "@mui/material";
-import { Button, Container, Tabs } from "./components";
-import { Add, Person, Print } from "@mui/icons-material";
+import { FC, useState, useRef } from "react";
+import { Paper, Box } from "@mui/material";
+import { Button, Container } from "./components";
+import { Add, Print } from "@mui/icons-material";
 import CreateDailyReportModal from "./modals/daily/Create";
 import { MUIDate, dailyReportType } from "./helpers/types";
 import { DailySubmitReviewReportCard } from "./containers";
 import BasicDatePicker from "./components/DateInput";
+import ReactToPrint from "react-to-print";
+import Header from "./containers/Header";
 
 const App: FC = () => {
   const [activeTab, setActiveTab] = useState<number>(1);
@@ -13,42 +15,13 @@ const App: FC = () => {
   const [submittedItems, setSubmittedItems] = useState<dailyReportType[]>([]);
   const [startDate, setStartDate] = useState<MUIDate>();
 
+  const printingBox = useRef(null);
+
   return (
-    <Paper square elevation={0}>
+    <Paper square elevation={0} component="main" ref={printingBox}>
       <Container sx={{ my: "20px" }}>
-        <Typography
-          variant="h5"
-          sx={{ textAlign: "center", my: "20px", fontWeight: "600" }}
-        >
-          سامانه گزارش دهی پروژه{" "}
-          <Box component="span" sx={{ color: "primary.main" }}>
-            بهزی
-          </Box>
-        </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Tabs
-            value={activeTab}
-            onChange={setActiveTab}
-            tabItems={["روزانه", "ماهانه", "هفتگی"]}
-          />
-          <Button startIcon={<Person />}>اطلاعات کاربری</Button>
-        </Box>
-        <Box
-          sx={{
-            my: "40px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "24px",
-            width: "100%",
-            alignItems: "flex-start",
-          }}
-        >
+        <Header activeTab={activeTab} setActiveTab={setActiveTab} />
+        <Box sx={StyleSheet.contentBox}>
           <BasicDatePicker
             value={startDate}
             onChange={(val) => val && setStartDate(val)}
@@ -60,13 +33,19 @@ const App: FC = () => {
             <Button startIcon={<Add />} onClick={() => setOpenCreate(true)}>
               افزودن مورد جدید
             </Button>
-            <Button
-              startIcon={<Print />}
-              variant="outlined"
-              onClick={() => setOpenCreate(true)}
-            >
-              دریافت گزارش
-            </Button>
+            <ReactToPrint
+              content={() => printingBox.current}
+              documentTitle="AwesomeFileName"
+              trigger={() => (
+                <Button
+                  startIcon={<Print />}
+                  variant="outlined"
+                  onClick={() => setOpenCreate(true)}
+                >
+                  دریافت گزارش
+                </Button>
+              )}
+            />
           </Box>
         </Box>
       </Container>
@@ -77,6 +56,17 @@ const App: FC = () => {
       />
     </Paper>
   );
+};
+
+const stlyes = {
+  contentBox: {
+    my: "40px",
+    display: "flex",
+    flexDirection: "column",
+    gap: "24px",
+    width: "100%",
+    alignItems: "flex-start",
+  },
 };
 
 export default App;

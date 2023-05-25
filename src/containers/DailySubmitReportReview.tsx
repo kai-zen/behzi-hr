@@ -11,21 +11,8 @@ const DailySubmitReviewReportCard: FC<propTypes> = ({ data }) => {
   const { title, description, items } = data;
 
   return (
-    <Card
-      sx={{
-        p: "16px",
-        border: "1px solid",
-        borderColor: "divider",
-        width: "100%",
-        display: "flex",
-        flexDirection: "column",
-        gap: "12px",
-      }}
-      elevation={0}
-    >
-      <Box
-        sx={{ display: "flex", justifyContent: "space-between", gap: "20px" }}
-      >
+    <Card sx={styles.card} elevation={0}>
+      <Box sx={styles.firstRow}>
         <Typography variant="h6">{title}</Typography>
         <Box className="flex-8">
           <IconButton sx={{ color: "warning.main" }}>
@@ -36,21 +23,10 @@ const DailySubmitReviewReportCard: FC<propTypes> = ({ data }) => {
           </IconButton>
         </Box>
       </Box>
-      <Box sx={{ isplay: "flex", flexDirection: "column", gap: "10px" }}>
+      <Box sx={styles.items}>
         {items.map((item, index) => (
-          <Box
-            key={index}
-            sx={{ display: "flex", alignItems: "center", gap: "4px" }}
-          >
-            <Box
-              sx={{
-                width: "4px",
-                height: "4px",
-                borderRadius: "2px",
-                bgcolor: "primary.main",
-                opacity: ".75",
-              }}
-            />
+          <Box key={index} sx={styles.item}>
+            <Box sx={styles.bullet} />
             <Typography variant="caption">{item}</Typography>
           </Box>
         ))}
@@ -59,6 +35,28 @@ const DailySubmitReviewReportCard: FC<propTypes> = ({ data }) => {
       <Typography>{description}</Typography>
     </Card>
   );
+};
+
+const styles = {
+  card: {
+    p: "16px",
+    border: "1px solid",
+    borderColor: "divider",
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    gap: "12px",
+  },
+  firstRow: { display: "flex", justifyContent: "space-between", gap: "20px" },
+  bullet: {
+    width: "4px",
+    height: "4px",
+    borderRadius: "2px",
+    bgcolor: "primary.main",
+    opacity: ".75",
+  },
+  item: { display: "flex", alignItems: "center", gap: "4px" },
+  items: { isplay: "flex", flexDirection: "column", gap: "10px" },
 };
 
 export default DailySubmitReviewReportCard;
