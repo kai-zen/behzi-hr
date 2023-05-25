@@ -40,8 +40,6 @@ const DailySubmitReviewReportCard: FC<propTypes> = ({ data }) => {
 const styles = {
   card: {
     p: "16px",
-    border: "1px solid",
-    borderColor: "divider",
     width: "100%",
     display: "flex",
     flexDirection: "column",

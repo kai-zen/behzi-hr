@@ -11,11 +11,13 @@ interface propTypes {
   onClick?: MouseEventHandler<HTMLButtonElement>;
   href?: string;
   disabled?: boolean;
+  sx?: { [properties: string]: string };
 }
 
 const Button: FC<propTypes> = ({
   children,
   variant = "contained",
+  sx = {},
   ...props
 }) => {
   return (
@@ -23,7 +25,7 @@ const Button: FC<propTypes> = ({
       variant={variant}
       disableElevation
       {...props}
-      sx={{ borderRadius: "6px" }}
+      sx={{ borderRadius: "6px", ...sx }}
     >
       {children}
     </MUIButton>

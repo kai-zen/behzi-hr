@@ -28,24 +28,16 @@ const DateInput: FC<propTypes> = ({ ...props }) => {
         inputFormat="jYYYY/jM/jD"
         renderInput={(params) => (
           <TextField
+            fullWidth
             size="small"
             {...params}
             onKeyDown={(e) => e.preventDefault()}
-            sx={styles.input}
-            error={false}
             label="تاریخ"
           />
         )}
       />
     </LocalizationProvider>
   );
-};
-
-const styles = {
-  input: {
-    width: "100%",
-    maxWidth: "300px",
-  },
 };
 
 export default DateInput;
