@@ -10,6 +10,7 @@ interface propTypes {
   type?: "submit" | "button" | "reset" | undefined;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   href?: string;
+  disabled?: boolean;
 }
 
 const Button: FC<propTypes> = ({

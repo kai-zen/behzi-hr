@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { Dialog, Box, Typography } from "@mui/material";
+import { Dialog, Box, Typography, IconButton } from "@mui/material";
 import { Button, TextInput } from "../../components";
 import { useFormik } from "formik";
 import dailyReportFormSchema from "../../helpers/schema/dailyReport";
-import { CheckCircle } from "@mui/icons-material";
+import { Add, CheckCircle } from "@mui/icons-material";
 
 interface propTypes {
   open: boolean;
@@ -33,14 +33,30 @@ const CreateDailyReportModal: FC<propTypes> = ({
   submit,
 }) => {
   // form stuff
-  const { values, errors, handleSubmit, handleChange } = useFormik({
+  const {
+    values,
+    errors,
+    handleSubmit,
+    handleChange,
+    setFieldValue,
+    resetForm,
+  } = useFormik({
     initialValues,
     validationSchema: dailyReportFormSchema,
     onSubmit: (values) => {
       const { title, description, items } = values;
       submit({ title, description, items });
+      resetForm();
+      handleClose();
     },
   });
+
+  const addItemHandler = () => {
+    if (values.typingItem) {
+      setFieldValue("items", [...values.items, values.typingItem]);
+      setFieldValue("typingItem", "");
+    }
+  };
 
   return (
     <Dialog onClose={handleClose} open={open}>
@@ -56,6 +72,7 @@ const CreateDailyReportModal: FC<propTypes> = ({
           alignItems: "flex-start",
         }}
       >
+        <Typography variant="h6">افزودن به گزارش روزانه</Typography>
         <TextInput
           label="عنوان"
           name="title"
@@ -63,12 +80,27 @@ const CreateDailyReportModal: FC<propTypes> = ({
           value={values.title}
           error={errors.title}
         />
-        <TextInput
-          label="موارد انجام شده"
-          name="typingItem"
-          onChange={handleChange}
-          value={values.typingItem}
-        />
+        <Box className="flex-8" sx={{ width: "100%" }}>
+          <TextInput
+            label="موارد انجام شده"
+            name="typingItem"
+            onChange={handleChange}
+            value={values.typingItem}
+            onKeydown={addItemHandler}
+          />
+          <IconButton
+            sx={{
+              bgcolor: "primary.main",
+              "&:hover": { bgcolor: "primary.dark" },
+              color: "common.white",
+            }}
+            size="small"
+            onClick={addItemHandler}
+          >
+            <Add />
+          </IconButton>
+        </Box>
+
         {values.items.map((item, index) => (
           <Typography key={index}>{item}</Typography>
         ))}
@@ -81,7 +113,11 @@ const CreateDailyReportModal: FC<propTypes> = ({
           multiline
           rows={4}
         />
-        <Button type="submit" startIcon={<CheckCircle />}>
+        <Button
+          type="submit"
+          startIcon={<CheckCircle />}
+          disabled={!values.title}
+        >
           ثبت گزارش
         </Button>
       </Box>
