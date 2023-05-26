@@ -54,8 +54,14 @@ const UserInfoModal: FC<propTypes> = ({ open, handleClose, submit }) => {
     <Dialog onClose={handleClose} open={open}>
       <Box component="form" onSubmit={handleSubmit} sx={styles.form}>
         <Typography variant="h6">اطلاعات کاربری</Typography>
-        <label htmlFor="addPhoto" onChange={handleUploadedPhoto}>
-          <input accept="image/*" id="addPhoto" type="file" hidden />
+        <label htmlFor="addPhoto">
+          <input
+            accept="image/*"
+            id="addPhoto"
+            type="file"
+            hidden
+            onChange={handleUploadedPhoto}
+          />
           <Avatar
             sx={{ width: "56px", height: "56px", cursor: "pointer" }}
             src={localStorage.getItem("uploadedImage") || ""}

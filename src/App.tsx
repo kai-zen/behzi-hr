@@ -1,4 +1,4 @@
-import { FC, useState, useRef, Fragment } from "react";
+import { FC, useState, useRef, Fragment, ChangeEvent } from "react";
 import {
   Paper,
   Box,
@@ -12,7 +12,7 @@ import {
 import { Button, Container } from "./components";
 import { Add, Print } from "@mui/icons-material";
 import CreateDailyReportModal from "./modals/daily/Create";
-import { MUIDate, dailyReportType } from "./helpers/types";
+import { dailyReportType } from "./helpers/types";
 import { DailySubmitReviewReportCard } from "./containers";
 import moment from "moment-jalaali";
 import BasicDatePicker from "./components/DateInput";
@@ -31,7 +31,9 @@ const App: FC = () => {
   });
 
   const [submittedItems, setSubmittedItems] = useState<dailyReportType[]>([]);
-  const [startDate, setStartDate] = useState<MUIDate>();
+  const [startDate, setStartDate] = useState<
+    ChangeEvent<HTMLSelectElement> | undefined
+  >();
   const [showActionButtons, setShowActionButtons] = useState<boolean>(false);
 
   const printingBox = useRef(null);
@@ -48,7 +50,7 @@ const App: FC = () => {
           <Grid item xs={12} lg={4}>
             <Box sx={styles.controller}>
               <BasicDatePicker
-                value={startDate}
+                value={startDate || undefined}
                 onChange={(val) => val && setStartDate(val)}
               />
               <Box className="flex-8">
@@ -117,7 +119,7 @@ const App: FC = () => {
                 </Fragment>
               ))}
               <Typography sx={styles.date}>
-                {moment(startDate).format("jYYYY/jMM/jDD")}
+                {moment(String(startDate ?? moment())).format("jYYYY/jMM/jDD")}
               </Typography>
             </Box>
           </Grid>
