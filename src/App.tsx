@@ -1,10 +1,20 @@
 import { FC, useState, useRef, Fragment } from "react";
-import { Paper, Box, Grid, Divider } from "@mui/material";
+import {
+  Paper,
+  Box,
+  Grid,
+  Divider,
+  Typography,
+  Avatar,
+  FormControlLabel,
+  Switch,
+} from "@mui/material";
 import { Button, Container } from "./components";
 import { Add, Print } from "@mui/icons-material";
 import CreateDailyReportModal from "./modals/daily/Create";
 import { MUIDate, dailyReportType } from "./helpers/types";
 import { DailySubmitReviewReportCard } from "./containers";
+import moment from "moment-jalaali";
 import BasicDatePicker from "./components/DateInput";
 import ReactToPrint from "react-to-print";
 import Header from "./containers/Header";
@@ -14,6 +24,7 @@ const App: FC = () => {
   const [openCreate, setOpenCreate] = useState<boolean>(false);
   const [submittedItems, setSubmittedItems] = useState<dailyReportType[]>([]);
   const [startDate, setStartDate] = useState<MUIDate>();
+  const [showActionButtons, setShowActionButtons] = useState<boolean>(false);
 
   const printingBox = useRef(null);
 
@@ -34,11 +45,10 @@ const App: FC = () => {
                   onClick={() => setOpenCreate(true)}
                   sx={{ width: "50%" }}
                 >
-                  افزودن مورد جدید
+                  مورد جدید
                 </Button>
                 <ReactToPrint
                   content={() => printingBox.current}
-                  documentTitle="AwesomeFileName"
                   trigger={() => (
                     <Button
                       startIcon={<Print />}
@@ -51,18 +61,49 @@ const App: FC = () => {
                   )}
                 />
               </Box>
+              <Box sx={{ width: "100%" }}>
+                <FormControlLabel
+                  labelPlacement="start"
+                  control={
+                    <Switch
+                      checked={showActionButtons}
+                      onChange={(e) => setShowActionButtons(e.target.checked)}
+                    />
+                  }
+                  label="نمایش دکمه ها"
+                />
+              </Box>
             </Box>
           </Grid>
           <Grid item xs={12} lg={8}>
             <Box ref={printingBox} sx={styles.printingBox}>
+              <Box sx={styles.printingHeader}>
+                <Box sx={styles.user}>
+                  <Avatar sx={{ width: "56px", height: "56px" }} />
+                  <Box sx={styles.userInfo}>
+                    <Typography fontWeight="600">علی رضی پور</Typography>
+                    <Typography color="primary.main" fontSize="13px">
+                      برنامه نویس فرانت اند
+                    </Typography>
+                  </Box>
+                </Box>
+                <img src="/public/logo.svg" style={{ width: "100px" }} />
+              </Box>
               {submittedItems.map((item, index) => (
                 <Fragment key={index}>
-                  <DailySubmitReviewReportCard data={item} />
+                  <DailySubmitReviewReportCard
+                    rowNumber={index + 1}
+                    data={item}
+                    showActionButtons={showActionButtons}
+                  />
                   {index < submittedItems.length - 1 && (
                     <Divider sx={{ width: "96%" }} />
                   )}
                 </Fragment>
               ))}
+              <Typography sx={styles.date}>
+                {moment(startDate).format("jYYYY/jMM/jDD")}
+              </Typography>
             </Box>
           </Grid>
         </Grid>
@@ -86,6 +127,28 @@ const styles = {
     flexDirection: "column",
     alignItems: "center",
     gap: "12px",
+    p: "16px",
+    bgcolor: "primary.light",
+  },
+  printingHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    mb: "20px",
+  },
+  user: { display: "flex", alignItems: "center", gap: "8px" },
+  userInfo: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "4px",
+  },
+  date: {
+    width: "100%",
+    textAlign: "right",
+    fontSize: "14px",
+    fontWeight: "500",
+    mt: "20px",
   },
 };
 

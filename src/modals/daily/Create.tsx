@@ -100,10 +100,14 @@ const CreateDailyReportModal: FC<propTypes> = ({
             <Add />
           </IconButton>
         </Box>
-
-        {values.items.map((item, index) => (
-          <Typography key={index}>{item}</Typography>
-        ))}
+        <Box sx={styles.items}>
+          {values.items.map((item, index) => (
+            <Box key={index} sx={styles.item}>
+              <Box sx={styles.bullet} />
+              <Typography variant="caption">{item}</Typography>
+            </Box>
+          ))}
+        </Box>
         <TextInput
           label="توضیحات بیشتر"
           name="description"
@@ -123,6 +127,18 @@ const CreateDailyReportModal: FC<propTypes> = ({
       </Box>
     </Dialog>
   );
+};
+
+const styles = {
+  bullet: {
+    width: "4px",
+    height: "4px",
+    borderRadius: "2px",
+    bgcolor: "primary.main",
+    opacity: ".75",
+  },
+  item: { display: "flex", alignItems: "center", gap: "4px" },
+  items: { isplay: "flex", flexDirection: "column", gap: "10px" },
 };
 
 export default CreateDailyReportModal;

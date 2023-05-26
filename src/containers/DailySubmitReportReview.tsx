@@ -1,39 +1,50 @@
-import { Card, Typography, Box, IconButton } from "@mui/material";
+import { Paper, Typography, Box, IconButton } from "@mui/material";
 import { FC } from "react";
 import { dailyReportType } from "../helpers/types";
 import { Delete, Edit } from "@mui/icons-material";
 
 interface propTypes {
   data: dailyReportType;
+  showActionButtons: boolean;
+  rowNumber: number;
 }
 
-const DailySubmitReviewReportCard: FC<propTypes> = ({ data }) => {
+const DailySubmitReviewReportCard: FC<propTypes> = ({
+  data,
+  showActionButtons,
+  rowNumber,
+}) => {
   const { title, description, items } = data;
 
   return (
-    <Card sx={styles.card} elevation={0}>
+    <Paper sx={styles.card} elevation={0}>
       <Box sx={styles.firstRow}>
-        <Typography variant="h6">{title}</Typography>
-        <Box className="flex-8">
-          <IconButton sx={{ color: "warning.main" }}>
-            <Edit />
-          </IconButton>
-          <IconButton sx={{ color: "error.main" }}>
-            <Delete />
-          </IconButton>
-        </Box>
-      </Box>
-      <Box sx={styles.items}>
-        {items.map((item, index) => (
-          <Box key={index} sx={styles.item}>
-            <Box sx={styles.bullet} />
-            <Typography variant="caption">{item}</Typography>
+        <Typography variant="h6">
+          {rowNumber}. {title}
+        </Typography>
+        {showActionButtons && (
+          <Box className="flex-8">
+            <IconButton sx={{ color: "warning.main" }}>
+              <Edit />
+            </IconButton>
+            <IconButton sx={{ color: "error.main" }}>
+              <Delete />
+            </IconButton>
           </Box>
-        ))}
+        )}
       </Box>
-
-      <Typography>{description}</Typography>
-    </Card>
+      {items.length > 0 && (
+        <Box sx={styles.items}>
+          {items.map((item, index) => (
+            <Box key={index} sx={styles.item}>
+              <Box sx={styles.bullet} />
+              <Typography variant="caption">{item}</Typography>
+            </Box>
+          ))}
+        </Box>
+      )}
+      {description && <Typography>{description}</Typography>}
+    </Paper>
   );
 };
 
@@ -45,7 +56,12 @@ const styles = {
     flexDirection: "column",
     gap: "12px",
   },
-  firstRow: { display: "flex", justifyContent: "space-between", gap: "20px" },
+  firstRow: {
+    display: "flex",
+    justifyContent: "space-between",
+    gap: "20px",
+    height: "32px",
+  },
   bullet: {
     width: "4px",
     height: "4px",

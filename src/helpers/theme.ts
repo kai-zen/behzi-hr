@@ -4,8 +4,8 @@ export const theme = createTheme({
   direction: "rtl",
   palette: {
     primary: {
-      main: "#7082F5",
-      light: "#D9DFFA",
+      main: "rgb(112,130,245)",
+      light: "rgba(112,130,245, 0.05)",
     },
     secondary: {
       main: "#FF8D14",
