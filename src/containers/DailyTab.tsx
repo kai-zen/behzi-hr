@@ -178,7 +178,6 @@ const styles = {
     alignItems: "center",
     gap: "12px",
     p: "16px",
-    bgcolor: "primary.light",
     width: "100%",
     aspectRatio: "210 / 297",
   },
