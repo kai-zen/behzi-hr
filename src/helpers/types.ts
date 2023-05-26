@@ -1,6 +1,7 @@
 import { ChangeEvent, KeyboardEvent } from "react";
 
 export type dailyReportType = {
+  id: number;
   title: string;
   items: string[];
   description: string;

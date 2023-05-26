@@ -99,6 +99,14 @@ const DailyTab: FC<propTypes> = ({ userInfo }) => {
                 <DailySubmitReviewReportCard
                   rowNumber={index + 1}
                   data={item}
+                  deleteHandler={(id) =>
+                    setSubmittedItems((prev) => {
+                      const filtered = [...prev].filter(
+                        (submittedItem) => submittedItem.id !== id
+                      );
+                      return filtered;
+                    })
+                  }
                   showActionButtons={showActionButtons}
                 />
                 {index < submittedItems.length - 1 && (
@@ -115,7 +123,16 @@ const DailyTab: FC<propTypes> = ({ userInfo }) => {
       <CreateDailyReportModal
         open={openCreate}
         handleClose={() => setOpenCreate(false)}
-        submit={(item) => setSubmittedItems((prev) => [...prev, item])}
+        submit={(item) =>
+          setSubmittedItems((prev) => {
+            const lastItem = submittedItems[submittedItems.length - 1];
+            let lastId = 0;
+            if (lastItem) {
+              lastId = lastItem.id;
+            }
+            return [...prev, { ...item, id: lastId + 1 }];
+          })
+        }
       />
     </>
   );
@@ -133,6 +150,8 @@ const styles = {
     gap: "12px",
     p: "16px",
     bgcolor: "primary.light",
+    width: "100%",
+    aspectRatio: "210 / 297",
   },
   printingHeader: {
     display: "flex",

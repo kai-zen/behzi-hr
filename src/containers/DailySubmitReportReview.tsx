@@ -7,14 +7,16 @@ interface propTypes {
   data: dailyReportType;
   showActionButtons: boolean;
   rowNumber: number;
+  deleteHandler: (id: number) => void;
 }
 
 const DailySubmitReviewReportCard: FC<propTypes> = ({
   data,
   showActionButtons,
   rowNumber,
+  deleteHandler,
 }) => {
-  const { title, description, items } = data;
+  const { title, description, items, id } = data;
 
   return (
     <Paper sx={styles.card} elevation={0}>
@@ -27,7 +29,10 @@ const DailySubmitReviewReportCard: FC<propTypes> = ({
             <IconButton sx={{ color: "warning.main" }}>
               <Edit />
             </IconButton>
-            <IconButton sx={{ color: "error.main" }}>
+            <IconButton
+              sx={{ color: "error.main" }}
+              onClick={() => deleteHandler(id)}
+            >
               <Delete />
             </IconButton>
           </Box>
