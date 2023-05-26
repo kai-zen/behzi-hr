@@ -58,6 +58,13 @@ const CreateDailyReportModal: FC<propTypes> = ({
     }
   };
 
+  const deleteItemHandler = (item: string) => {
+    if (item) {
+      const filtered = [...values.items].filter((i) => i !== item);
+      setFieldValue("items", filtered);
+    }
+  };
+
   return (
     <Dialog onClose={handleClose} open={open}>
       <Box component="form" onSubmit={handleSubmit} sx={styles.form}>
@@ -93,7 +100,18 @@ const CreateDailyReportModal: FC<propTypes> = ({
           {values.items.map((item, index) => (
             <Box key={index} sx={styles.item}>
               <Box sx={styles.bullet} />
-              <Typography variant="caption">{item}</Typography>
+              <Typography
+                variant="caption"
+                sx={{
+                  "&:hover": {
+                    color: "error.main",
+                    cursor: "pointer",
+                  },
+                }}
+                onClick={() => deleteItemHandler(item)}
+              >
+                {item}
+              </Typography>
             </Box>
           ))}
         </Box>
