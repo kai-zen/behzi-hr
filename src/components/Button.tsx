@@ -12,6 +12,7 @@ interface propTypes {
   href?: string;
   disabled?: boolean;
   sx?: { [properties: string]: string };
+  component?: string;
 }
 
 const Button: FC<propTypes> = ({

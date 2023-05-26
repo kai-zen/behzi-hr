@@ -1,10 +1,10 @@
-import { FC } from "react";
-import { Dialog, Box, Typography } from "@mui/material";
+import { ChangeEvent, FC, useState } from "react";
+import { Dialog, Box, Typography, Avatar } from "@mui/material";
 import { useFormik } from "formik";
-import dailyReportFormSchema from "../helpers/schema/dailyReport";
 import { CheckCircle } from "@mui/icons-material";
 import { Button, TextInput } from "../components";
 import { userData } from "../helpers/types";
+import userInfoFormSchema from "../helpers/schema/userInfo";
 
 interface propTypes {
   open: boolean;
@@ -21,24 +21,46 @@ const initialValues: {
 };
 
 const UserInfoModal: FC<propTypes> = ({ open, handleClose, submit }) => {
+  const [uploadedPhoto, setUploadedPhoto] = useState<string | null>(
+    localStorage.getItem("uploadedImage")
+  );
+
   // form stuff
   const { values, errors, handleSubmit, handleChange } = useFormik({
     initialValues,
-    validationSchema: dailyReportFormSchema,
+    validationSchema: userInfoFormSchema,
     onSubmit: (values) => {
-      const photo = localStorage.getItem("uploadedImage");
       const { name, job } = values;
       localStorage.setItem("job", job);
       localStorage.setItem("name", name);
-      submit({ name, job, image: photo || "" });
+      submit({ name, job, image: uploadedPhoto || "" });
       handleClose();
     },
   });
+
+  const handleUploadedPhoto = (e: ChangeEvent<HTMLInputElement>) => {
+    const photoFile = e?.target?.files?.[0];
+    if (photoFile) {
+      const reader = new FileReader();
+      reader.readAsDataURL(photoFile);
+      reader.addEventListener("load", () => {
+        setUploadedPhoto(String(reader.result));
+        localStorage.setItem("uploadedImage", String(reader.result));
+      });
+    }
+  };
 
   return (
     <Dialog onClose={handleClose} open={open}>
       <Box component="form" onSubmit={handleSubmit} sx={styles.form}>
         <Typography variant="h6">اطلاعات کاربری</Typography>
+        <label htmlFor="addPhoto" onChange={handleUploadedPhoto}>
+          <input accept="image/*" id="addPhoto" type="file" hidden />
+          <Avatar
+            sx={{ width: "56px", height: "56px", cursor: "pointer" }}
+            src={localStorage.getItem("uploadedImage") || ""}
+          />
+        </label>
         <TextInput
           label="نام"
           name="name"

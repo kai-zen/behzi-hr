@@ -25,7 +25,7 @@ const App: FC = () => {
   const [openCreate, setOpenCreate] = useState<boolean>(false);
   const [openUserInfo, setOpenUserInfo] = useState<boolean>(false);
   const [userInfo, setUserInfo] = useState({
-    image: "",
+    image: localStorage.getItem("uploadedImage") || "",
     name: "",
     job: "",
   });

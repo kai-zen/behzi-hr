@@ -60,18 +60,7 @@ const CreateDailyReportModal: FC<propTypes> = ({
 
   return (
     <Dialog onClose={handleClose} open={open}>
-      <Box
-        component="form"
-        onSubmit={handleSubmit}
-        sx={{
-          p: "24px",
-          display: "flex",
-          width: "600px",
-          flexDirection: "column",
-          gap: "24px",
-          alignItems: "flex-start",
-        }}
-      >
+      <Box component="form" onSubmit={handleSubmit} sx={styles.form}>
         <Typography variant="h6">افزودن به گزارش روزانه</Typography>
         <TextInput
           label="عنوان"
@@ -130,6 +119,14 @@ const CreateDailyReportModal: FC<propTypes> = ({
 };
 
 const styles = {
+  form: {
+    p: "24px",
+    display: "flex",
+    width: "600px",
+    flexDirection: "column",
+    gap: "24px",
+    alignItems: "flex-start",
+  },
   bullet: {
     width: "4px",
     height: "4px",
