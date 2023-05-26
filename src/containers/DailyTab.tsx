@@ -17,6 +17,7 @@ import { userData } from "@/helpers/types";
 import moment from "moment-jalaali";
 import BasicDatePicker from "@/components/DateInput";
 import ReactToPrint from "react-to-print";
+import EditDailyReportModal from "@/modals/daily/Edit";
 
 interface propTypes {
   userInfo: userData;
@@ -24,11 +25,18 @@ interface propTypes {
 
 const DailyTab: FC<propTypes> = ({ userInfo }) => {
   const [openCreate, setOpenCreate] = useState<boolean>(false);
+  const [openEdit, setOpenEdit] = useState<boolean>(false);
   const [submittedItems, setSubmittedItems] = useState<dailyReportType[]>([]);
   const [startDate, setStartDate] = useState<
     ChangeEvent<HTMLSelectElement> | undefined
   >();
   const [showActionButtons, setShowActionButtons] = useState<boolean>(false);
+  const [editingData, setEditingData] = useState<dailyReportType>({
+    id: 0,
+    title: "",
+    description: "",
+    items: [],
+  });
 
   const printingBox = useRef(null);
 
@@ -107,6 +115,10 @@ const DailyTab: FC<propTypes> = ({ userInfo }) => {
                       return filtered;
                     })
                   }
+                  editHandler={(data: dailyReportType) => {
+                    setEditingData(data);
+                    setOpenEdit(true);
+                  }}
                   showActionButtons={showActionButtons}
                 />
                 {index < submittedItems.length - 1 && (
@@ -133,6 +145,23 @@ const DailyTab: FC<propTypes> = ({ userInfo }) => {
             return [...prev, { ...item, id: lastId + 1 }];
           })
         }
+      />
+      <EditDailyReportModal
+        open={openEdit}
+        handleClose={() => setOpenEdit(false)}
+        submit={(data) =>
+          setSubmittedItems((prev) => {
+            const copy = [...prev];
+            const index = prev.findIndex(
+              (submittedItem) => submittedItem.id === data.id
+            );
+            if (submittedItems[index]) {
+              copy[index] = data;
+            }
+            return copy;
+          })
+        }
+        initialValues={editingData}
       />
     </>
   );

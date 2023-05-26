@@ -1,6 +1,6 @@
 import { Paper, Typography, Box, IconButton } from "@mui/material";
 import { FC } from "react";
-import { dailyReportType } from "../helpers/types";
+import { dailyReportType } from "@/helpers/types";
 import { Delete, Edit } from "@mui/icons-material";
 
 interface propTypes {
@@ -8,6 +8,7 @@ interface propTypes {
   showActionButtons: boolean;
   rowNumber: number;
   deleteHandler: (id: number) => void;
+  editHandler: (data: dailyReportType) => void;
 }
 
 const DailySubmitReviewReportCard: FC<propTypes> = ({
@@ -15,6 +16,7 @@ const DailySubmitReviewReportCard: FC<propTypes> = ({
   showActionButtons,
   rowNumber,
   deleteHandler,
+  editHandler,
 }) => {
   const { title, description, items, id } = data;
 
@@ -26,7 +28,10 @@ const DailySubmitReviewReportCard: FC<propTypes> = ({
         </Typography>
         {showActionButtons && (
           <Box className="flex-8">
-            <IconButton sx={{ color: "warning.main" }}>
+            <IconButton
+              sx={{ color: "warning.main" }}
+              onClick={() => editHandler(data)}
+            >
               <Edit />
             </IconButton>
             <IconButton
