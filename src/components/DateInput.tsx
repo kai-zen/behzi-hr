@@ -1,8 +1,9 @@
-import { FC, ChangeEvent } from "react";
+import { FC } from "react";
 import { TextField } from "@mui/material";
 import jMoment from "moment-jalaali";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import JalaliUtils from "@date-io/jalaali";
+import { MUIDate, MUIDateChangeHandler } from "../helpers/types";
 
 jMoment.loadPersian({
   dialect: "persian-modern",
@@ -10,15 +11,12 @@ jMoment.loadPersian({
 });
 
 interface propTypes {
-  value: ChangeEvent<HTMLSelectElement> | undefined;
-  onChange: (
-    value: ChangeEvent<HTMLSelectElement> | null,
-    keyboardInputValue?: string | undefined
-  ) => void;
+  value: MUIDate;
+  onChange: MUIDateChangeHandler;
   future?: boolean;
-  minDate?: ChangeEvent<HTMLSelectElement> | undefined;
+  minDate?: MUIDate;
   disabled?: boolean;
-  maxDate?: ChangeEvent<HTMLSelectElement> | undefined;
+  maxDate?: MUIDate;
 }
 
 const DateInput: FC<propTypes> = ({ ...props }) => {
