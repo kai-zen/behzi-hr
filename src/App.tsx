@@ -26,8 +26,8 @@ const App: FC = () => {
   const [openUserInfo, setOpenUserInfo] = useState<boolean>(false);
   const [userInfo, setUserInfo] = useState({
     image: localStorage.getItem("uploadedImage") || "",
-    name: "",
-    job: "",
+    name: localStorage.getItem("name") || "",
+    job: localStorage.getItem("job") || "",
   });
 
   const [submittedItems, setSubmittedItems] = useState<dailyReportType[]>([]);
