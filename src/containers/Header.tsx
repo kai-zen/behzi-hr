@@ -6,9 +6,10 @@ import { FC } from "react";
 interface propTypes {
   activeTab: number;
   setActiveTab: (val: number) => void;
+  open: () => void;
 }
 
-const Header: FC<propTypes> = ({ activeTab, setActiveTab }) => {
+const Header: FC<propTypes> = ({ activeTab, setActiveTab, open }) => {
   return (
     <Box component="header">
       <Typography variant="h5" sx={styles.title}>
@@ -23,7 +24,9 @@ const Header: FC<propTypes> = ({ activeTab, setActiveTab }) => {
           onChange={setActiveTab}
           tabItems={["روزانه", "ماهانه", "هفتگی"]}
         />
-        <Button startIcon={<Person />}>اطلاعات کاربری</Button>
+        <Button startIcon={<Person />} onClick={open}>
+          اطلاعات کاربری
+        </Button>
       </Box>
     </Box>
   );

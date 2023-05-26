@@ -9,8 +9,14 @@ export type dailyReportType = {
 export type changeHandler = (e: ChangeEvent<HTMLInputElement>) => void;
 export type keydownHandler = (e: KeyboardEvent<HTMLInputElement>) => void;
 
-export type MUIDate = ChangeEvent<HTMLInputElement> | undefined;
+export type MUIDate = ChangeEvent<HTMLSelectElement> | undefined;
 export type MUIDateChangeHandler = (
-  value: ChangeEvent<HTMLInputElement> | null,
+  value: ChangeEvent<HTMLSelectElement> | null,
   keyboardInputValue?: string | undefined
 ) => void;
+
+export type userData = {
+  name: string;
+  job: string;
+  image: string;
+};

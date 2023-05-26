@@ -18,10 +18,18 @@ import moment from "moment-jalaali";
 import BasicDatePicker from "./components/DateInput";
 import ReactToPrint from "react-to-print";
 import Header from "./containers/Header";
+import UserInfoModal from "./modals/UserInfo";
 
 const App: FC = () => {
   const [activeTab, setActiveTab] = useState<number>(1);
   const [openCreate, setOpenCreate] = useState<boolean>(false);
+  const [openUserInfo, setOpenUserInfo] = useState<boolean>(false);
+  const [userInfo, setUserInfo] = useState({
+    image: "",
+    name: "",
+    job: "",
+  });
+
   const [submittedItems, setSubmittedItems] = useState<dailyReportType[]>([]);
   const [startDate, setStartDate] = useState<MUIDate>();
   const [showActionButtons, setShowActionButtons] = useState<boolean>(false);
@@ -31,7 +39,11 @@ const App: FC = () => {
   return (
     <Paper square elevation={0} component="main">
       <Container sx={{ my: "20px" }}>
-        <Header activeTab={activeTab} setActiveTab={setActiveTab} />
+        <Header
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          open={() => setOpenUserInfo(true)}
+        />
         <Grid container spacing="16px" sx={{ my: "40px" }}>
           <Grid item xs={12} lg={4}>
             <Box sx={styles.controller}>
@@ -79,15 +91,18 @@ const App: FC = () => {
             <Box ref={printingBox} sx={styles.printingBox}>
               <Box sx={styles.printingHeader}>
                 <Box sx={styles.user}>
-                  <Avatar sx={{ width: "56px", height: "56px" }} />
+                  <Avatar
+                    sx={{ width: "56px", height: "56px" }}
+                    src={userInfo.image}
+                  />
                   <Box sx={styles.userInfo}>
-                    <Typography fontWeight="600">علی رضی پور</Typography>
+                    <Typography fontWeight="600">{userInfo.name}</Typography>
                     <Typography color="primary.main" fontSize="13px">
-                      برنامه نویس فرانت اند
+                      {userInfo.job}
                     </Typography>
                   </Box>
                 </Box>
-                <img src="/public/logo.svg" style={{ width: "100px" }} />
+                <img src="/logo.svg" style={{ width: "100px" }} />
               </Box>
               {submittedItems.map((item, index) => (
                 <Fragment key={index}>
@@ -112,6 +127,11 @@ const App: FC = () => {
         open={openCreate}
         handleClose={() => setOpenCreate(false)}
         submit={(item) => setSubmittedItems((prev) => [...prev, item])}
+      />
+      <UserInfoModal
+        open={openUserInfo}
+        handleClose={() => setOpenUserInfo(false)}
+        submit={setUserInfo}
       />
     </Paper>
   );
