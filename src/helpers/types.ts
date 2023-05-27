@@ -6,6 +6,14 @@ export type dailyReportType = {
   items: string[];
   description: string;
 };
+export type weeklyReportType = {
+  id: number;
+  title: string;
+  items: string[];
+  description: string;
+  immediateLevel: "1" | "2" | "3";
+  importanceLevel: "1" | "2" | "3";
+};
 
 export type changeHandler = (e: ChangeEvent<HTMLInputElement>) => void;
 export type keydownHandler = (e: KeyboardEvent<HTMLInputElement>) => void;

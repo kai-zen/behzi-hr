@@ -11,13 +11,12 @@ import {
 import { Button } from "@/components";
 import { Add, Print } from "@mui/icons-material";
 import CreateWeeklyReportModal from "@/modals/weekly/Create";
-import { dailyReportType } from "@/helpers/types";
-import { DailySubmitReviewReportCard } from "@/containers";
-import { userData } from "@/helpers/types";
+import { WeeklySubmitReviewReportCard } from "@/containers";
+import { userData, weeklyReportType } from "@/helpers/types";
 import moment from "moment-jalaali";
 import BasicDatePicker from "@/components/DateInput";
 import ReactToPrint from "react-to-print";
-import EditDailyReportModal from "@/modals/daily/Edit";
+import EditWeeklyReportModal from "@/modals/weekly/Edit";
 
 interface propTypes {
   userInfo: userData;
@@ -26,16 +25,18 @@ interface propTypes {
 const WeeklyTab: FC<propTypes> = ({ userInfo }) => {
   const [openCreate, setOpenCreate] = useState<boolean>(false);
   const [openEdit, setOpenEdit] = useState<boolean>(false);
-  const [submittedItems, setSubmittedItems] = useState<dailyReportType[]>([]);
+  const [submittedItems, setSubmittedItems] = useState<weeklyReportType[]>([]);
   const [startDate, setStartDate] = useState<
     ChangeEvent<HTMLSelectElement> | undefined
   >();
   const [showActionButtons, setShowActionButtons] = useState<boolean>(false);
-  const [editingData, setEditingData] = useState<dailyReportType>({
+  const [editingData, setEditingData] = useState<weeklyReportType>({
     id: 0,
     title: "",
     description: "",
     items: [],
+    immediateLevel: "1",
+    importanceLevel: "1",
   });
 
   const printingBox = useRef(null);
@@ -104,7 +105,7 @@ const WeeklyTab: FC<propTypes> = ({ userInfo }) => {
             </Box>
             {submittedItems.map((item, index) => (
               <Fragment key={index}>
-                <DailySubmitReviewReportCard
+                <WeeklySubmitReviewReportCard
                   rowNumber={index + 1}
                   data={item}
                   deleteHandler={(id) =>
@@ -115,7 +116,7 @@ const WeeklyTab: FC<propTypes> = ({ userInfo }) => {
                       return filtered;
                     })
                   }
-                  editHandler={(data: dailyReportType) => {
+                  editHandler={(data: weeklyReportType) => {
                     setEditingData(data);
                     setOpenEdit(true);
                   }}
@@ -146,7 +147,7 @@ const WeeklyTab: FC<propTypes> = ({ userInfo }) => {
           })
         }
       />
-      <EditDailyReportModal
+      <EditWeeklyReportModal
         open={openEdit}
         handleClose={() => setOpenEdit(false)}
         submit={(data) =>

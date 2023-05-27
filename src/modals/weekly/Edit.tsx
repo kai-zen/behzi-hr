@@ -1,42 +1,23 @@
 import { FC } from "react";
 import { Dialog, Box, Typography, IconButton } from "@mui/material";
-import { Button, Dropdown, TextInput } from "../../components";
+import { Button, TextInput } from "../../components";
 import { useFormik } from "formik";
 import dailyReportFormSchema from "../../helpers/schema/dailyReport";
 import { Add, CheckCircle } from "@mui/icons-material";
+import { weeklyReportType } from "@/helpers/types";
 
 interface propTypes {
   open: boolean;
   handleClose: () => void;
-  submit: (weeklyReportData: {
-    title: string;
-    items: string[];
-    description: string;
-    immediateLevel: "1" | "2" | "3";
-    importanceLevel: "1" | "2" | "3";
-  }) => void;
+  submit: (dailyReportData: weeklyReportType) => void;
+  initialValues: weeklyReportType;
 }
 
-const initialValues: {
-  title: string;
-  typingItem: string;
-  items: string[];
-  description: string;
-  immediateLevel: "1" | "2" | "3";
-  importanceLevel: "1" | "2" | "3";
-} = {
-  title: "",
-  typingItem: "",
-  items: [],
-  description: "",
-  immediateLevel: "1",
-  importanceLevel: "1",
-};
-
-const CreateWeeklyReportModal: FC<propTypes> = ({
+const EditWeeklyReportModal: FC<propTypes> = ({
   open,
   handleClose,
   submit,
+  initialValues,
 }) => {
   // form stuff
   const {
@@ -47,12 +28,20 @@ const CreateWeeklyReportModal: FC<propTypes> = ({
     setFieldValue,
     resetForm,
   } = useFormik({
-    initialValues,
+    initialValues: { ...initialValues, typingItem: "" },
+    enableReinitialize: true,
     validationSchema: dailyReportFormSchema,
     onSubmit: (values) => {
       const { title, description, items, immediateLevel, importanceLevel } =
         values;
-      submit({ title, description, items, immediateLevel, importanceLevel });
+      submit({
+        title,
+        description,
+        items,
+        immediateLevel,
+        importanceLevel,
+        id: initialValues.id,
+      });
       resetForm();
       handleClose();
     },
@@ -75,7 +64,7 @@ const CreateWeeklyReportModal: FC<propTypes> = ({
   return (
     <Dialog onClose={handleClose} open={open}>
       <Box component="form" onSubmit={handleSubmit} sx={styles.form}>
-        <Typography variant="h6">افزودن به گزارش هفتگی</Typography>
+        <Typography variant="h6">افزودن به گزارش روزانه</Typography>
         <TextInput
           label="عنوان"
           name="title"
@@ -85,7 +74,7 @@ const CreateWeeklyReportModal: FC<propTypes> = ({
         />
         <Box className="flex-8" sx={{ width: "100%" }}>
           <TextInput
-            label="موارد انجام"
+            label="موارد انجام شده"
             name="typingItem"
             onChange={handleChange}
             value={values.typingItem}
@@ -131,29 +120,6 @@ const CreateWeeklyReportModal: FC<propTypes> = ({
           multiline
           rows={4}
         />
-        <Box className="flex-12" sx={{ width: "100%" }}>
-          <Dropdown
-            value={values.immediateLevel}
-            label="درجه فوریت"
-            onChange={(e) => setFieldValue("immediateLevel", e.target.value)}
-            items={[
-              { value: "1", title: "غیر فوری" },
-              { value: "2", title: "نیمه فوری" },
-              { value: "3", title: "کاملا مهم" },
-            ]}
-          />
-          <Dropdown
-            value={values.importanceLevel}
-            label="درجه اهمیت"
-            onChange={(e) => setFieldValue("importanceLevel", e.target.value)}
-            items={[
-              { value: "1", title: "کم اهمیت" },
-              { value: "2", title: "نیمه مهم" },
-              { value: "3", title: "کاملا مهم" },
-            ]}
-          />
-        </Box>
-
         <Button
           type="submit"
           startIcon={<CheckCircle />}
@@ -186,4 +152,4 @@ const styles = {
   items: { isplay: "flex", flexDirection: "column", gap: "10px" },
 };
 
-export default CreateWeeklyReportModal;
+export default EditWeeklyReportModal;
