@@ -22,7 +22,7 @@ const Header: FC<propTypes> = ({ activeTab, setActiveTab, open }) => {
         <Tabs
           value={activeTab}
           onChange={setActiveTab}
-          tabItems={["روزانه", "ماهانه", "هفتگی"]}
+          tabItems={["روزانه", "هفتگی"]}
         />
         <Button startIcon={<Person />} onClick={open}>
           اطلاعات کاربری

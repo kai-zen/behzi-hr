@@ -9,7 +9,10 @@ const dailyReportFormSchema = yup.object({
     .array()
     .of(yup.string().max(100, "حداکثر 100 کاراکتر باشد"))
     .max(10, "حداکثر ده مورد عنوان شود"),
-  description: yup.string().max(700, "حداکثر 700 کاراکتر باشد"),
+  description: yup
+    .string()
+    .required("توضیحات وارد شود")
+    .max(1000, "حداکثر 1000 کاراکتر باشد"),
 });
 
 export default dailyReportFormSchema;

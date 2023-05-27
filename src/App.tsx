@@ -4,6 +4,7 @@ import { Container } from "@/components";
 import Header from "@/containers/Header";
 import UserInfoModal from "@/modals/UserInfo";
 import DailyTab from "@/containers/DailyTab";
+import WeeklyTab from "@/containers/WeeklyTab";
 
 const App: FC = () => {
   const [activeTab, setActiveTab] = useState<number>(1);
@@ -23,6 +24,7 @@ const App: FC = () => {
           open={() => setOpenUserInfo(true)}
         />
         {activeTab === 1 && <DailyTab userInfo={userInfo} />}
+        {activeTab === 2 && <WeeklyTab userInfo={userInfo} />}
       </Container>
       <UserInfoModal
         open={openUserInfo}
