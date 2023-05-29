@@ -2,8 +2,9 @@ import { FC } from "react";
 import { Dialog, Box, Typography, IconButton } from "@mui/material";
 import { Button, Dropdown, TextInput } from "../../components";
 import { useFormik } from "formik";
-import dailyReportFormSchema from "../../helpers/schema/dailyReport";
 import { Add, CheckCircle } from "@mui/icons-material";
+import weeklyReportFormSchema from "@/helpers/schema/weeklyReport";
+import { immediateLevels, importanceLevels } from "@/helpers/constants";
 
 interface propTypes {
   open: boolean;
@@ -48,7 +49,7 @@ const CreateWeeklyReportModal: FC<propTypes> = ({
     resetForm,
   } = useFormik({
     initialValues,
-    validationSchema: dailyReportFormSchema,
+    validationSchema: weeklyReportFormSchema,
     onSubmit: (values) => {
       const { title, description, items, immediateLevel, importanceLevel } =
         values;
@@ -136,28 +137,20 @@ const CreateWeeklyReportModal: FC<propTypes> = ({
             value={values.immediateLevel}
             label="درجه فوریت"
             onChange={(e) => setFieldValue("immediateLevel", e.target.value)}
-            items={[
-              { value: "1", title: "غیر فوری" },
-              { value: "2", title: "نیمه فوری" },
-              { value: "3", title: "کاملا مهم" },
-            ]}
+            items={immediateLevels}
           />
           <Dropdown
             value={values.importanceLevel}
             label="درجه اهمیت"
             onChange={(e) => setFieldValue("importanceLevel", e.target.value)}
-            items={[
-              { value: "1", title: "کم اهمیت" },
-              { value: "2", title: "نیمه مهم" },
-              { value: "3", title: "کاملا مهم" },
-            ]}
+            items={importanceLevels}
           />
         </Box>
 
         <Button
           type="submit"
           startIcon={<CheckCircle />}
-          disabled={!values.title}
+          disabled={!values.title || !values.description}
         >
           ثبت گزارش
         </Button>

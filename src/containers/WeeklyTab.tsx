@@ -8,7 +8,7 @@ import {
   FormControlLabel,
   Switch,
 } from "@mui/material";
-import { Button } from "@/components";
+import { Button, TextInput } from "@/components";
 import { Add, Print } from "@mui/icons-material";
 import CreateWeeklyReportModal from "@/modals/weekly/Create";
 import { WeeklySubmitReviewReportCard } from "@/containers";
@@ -38,6 +38,7 @@ const WeeklyTab: FC<propTypes> = ({ userInfo }) => {
     immediateLevel: "1",
     importanceLevel: "1",
   });
+  const [title, setTitle] = useState("");
 
   const printingBox = useRef(null);
 
@@ -46,6 +47,11 @@ const WeeklyTab: FC<propTypes> = ({ userInfo }) => {
       <Grid container spacing="16px" sx={{ my: "40px" }}>
         <Grid item xs={12} lg={4}>
           <Box sx={styles.controller}>
+            <TextInput
+              label="عنوان"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
             <BasicDatePicker
               value={startDate || undefined}
               onChange={(val) => val && setStartDate(val)}
@@ -103,10 +109,12 @@ const WeeklyTab: FC<propTypes> = ({ userInfo }) => {
               </Box>
               <img src="/logo.svg" style={{ width: "100px" }} />
             </Box>
+            <Typography variant="h5" fontWeight="600">
+              {title}
+            </Typography>
             {submittedItems.map((item, index) => (
               <Fragment key={index}>
                 <WeeklySubmitReviewReportCard
-                  rowNumber={index + 1}
                   data={item}
                   deleteHandler={(id) =>
                     setSubmittedItems((prev) => {
@@ -127,9 +135,25 @@ const WeeklyTab: FC<propTypes> = ({ userInfo }) => {
                 )}
               </Fragment>
             ))}
-            <Typography sx={styles.date}>
-              {moment(String(startDate ?? moment())).format("jYYYY/jMM/jDD")}
-            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                gap: "8px",
+                alignItems: "center",
+                justifyContent: "flex-end",
+                width: "100%",
+              }}
+            >
+              <Typography sx={styles.date}>
+                {moment(String(startDate ?? moment())).format("jYYYY/jMM/jDD")}
+              </Typography>
+              <Typography>تا</Typography>
+              <Typography sx={styles.date}>
+                {moment(String(startDate ?? moment()))
+                  .add(7, "days")
+                  .format("jYYYY/jMM/jDD")}
+              </Typography>
+            </Box>
           </Box>
         </Grid>
       </Grid>
@@ -196,11 +220,8 @@ const styles = {
     gap: "4px",
   },
   date: {
-    width: "100%",
-    textAlign: "right",
     fontSize: "14px",
     fontWeight: "500",
-    mt: "20px",
   },
 };
 

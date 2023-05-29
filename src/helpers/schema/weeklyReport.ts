@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-const dailyReportFormSchema = yup.object({
+const weeklyReportFormSchema = yup.object({
   title: yup
     .string()
     .required("عنوان وارد شود")
@@ -15,4 +15,4 @@ const dailyReportFormSchema = yup.object({
     .max(1000, "حداکثر 1000 کاراکتر باشد"),
 });
 
-export default dailyReportFormSchema;
+export default weeklyReportFormSchema;

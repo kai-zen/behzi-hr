@@ -1,12 +1,19 @@
-import { Paper, Typography, Box, IconButton } from "@mui/material";
+import {
+  Paper,
+  Typography,
+  Box,
+  IconButton,
+  Checkbox,
+  Chip,
+} from "@mui/material";
 import { FC } from "react";
 import { weeklyReportType } from "@/helpers/types";
 import { Delete, Edit } from "@mui/icons-material";
+import { immediateLevels, importanceLevels } from "@/helpers/constants";
 
 interface propTypes {
   data: weeklyReportType;
   showActionButtons: boolean;
-  rowNumber: number;
   deleteHandler: (id: number) => void;
   editHandler: (data: weeklyReportType) => void;
 }
@@ -14,17 +21,23 @@ interface propTypes {
 const WeeklySubmitReviewReportCard: FC<propTypes> = ({
   data,
   showActionButtons,
-  rowNumber,
   deleteHandler,
   editHandler,
 }) => {
-  const { title, description, items, id } = data;
+  const { title, description, items, id, immediateLevel, importanceLevel } =
+    data;
+
+  const immediateLabel =
+    immediateLevels.find((item) => item.value === immediateLevel)?.title || "";
+  const importanceLabel =
+    importanceLevels.find((item) => item.value === importanceLevel)?.title ||
+    "";
 
   return (
     <Paper sx={styles.card} elevation={0}>
       <Box sx={styles.firstRow}>
         <Typography variant="h6">
-          {rowNumber}. {title}
+          <Checkbox /> {title}
         </Typography>
         {showActionButtons && (
           <Box className="flex-8">
@@ -53,7 +66,13 @@ const WeeklySubmitReviewReportCard: FC<propTypes> = ({
           ))}
         </Box>
       )}
-      {description && <Typography>{description}</Typography>}
+      {description && (
+        <Typography sx={{ pl: "32px" }}>{description}</Typography>
+      )}
+      <Box sx={{ display: "flex", gap: "6px" }}>
+        <Chip label={importanceLabel} />
+        <Chip label={immediateLabel} />
+      </Box>
     </Paper>
   );
 };
@@ -64,7 +83,7 @@ const styles = {
     width: "100%",
     display: "flex",
     flexDirection: "column",
-    gap: "12px",
+    gap: "16px",
   },
   firstRow: {
     display: "flex",
@@ -80,7 +99,7 @@ const styles = {
     opacity: ".75",
   },
   item: { display: "flex", alignItems: "center", gap: "4px" },
-  items: { isplay: "flex", flexDirection: "column", gap: "10px" },
+  items: { isplay: "flex", flexDirection: "column", gap: "10px", pl: "46px" },
 };
 
 export default WeeklySubmitReviewReportCard;
