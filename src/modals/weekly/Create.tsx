@@ -92,15 +92,7 @@ const CreateWeeklyReportModal: FC<propTypes> = ({
             value={values.typingItem}
             onKeydown={addItemHandler}
           />
-          <IconButton
-            sx={{
-              bgcolor: "primary.main",
-              "&:hover": { bgcolor: "primary.dark" },
-              color: "common.white",
-            }}
-            size="small"
-            onClick={addItemHandler}
-          >
+          <IconButton sx={styles.addItem} size="small" onClick={addItemHandler}>
             <Add />
           </IconButton>
         </Box>
@@ -110,12 +102,7 @@ const CreateWeeklyReportModal: FC<propTypes> = ({
               <Box sx={styles.bullet} />
               <Typography
                 variant="caption"
-                sx={{
-                  "&:hover": {
-                    color: "error.main",
-                    cursor: "pointer",
-                  },
-                }}
+                sx={styles.itemTypography}
                 onClick={() => deleteItemHandler(item)}
               >
                 {item}
@@ -175,7 +162,18 @@ const styles = {
     bgcolor: "primary.main",
     opacity: ".75",
   },
+  addItem: {
+    bgcolor: "primary.main",
+    "&:hover": { bgcolor: "primary.dark" },
+    color: "common.white",
+  },
   item: { display: "flex", alignItems: "center", gap: "4px" },
+  itemTypography: {
+    "&:hover": {
+      color: "error.main",
+      cursor: "pointer",
+    },
+  },
   items: { isplay: "flex", flexDirection: "column", gap: "10px" },
 };
 

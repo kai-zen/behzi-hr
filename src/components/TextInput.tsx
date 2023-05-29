@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { TextField } from "@mui/material";
-import { changeHandler, keydownHandler } from "../helpers/types";
+import { changeHandler, keydownHandler } from "@/helpers/types";
 
 interface propTypes {
   error?: string;

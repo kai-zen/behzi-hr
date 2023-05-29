@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Dialog, Box, Typography, IconButton } from "@mui/material";
-import { Button, TextInput } from "../../components";
+import { Button, TextInput } from "@/components";
 import { useFormik } from "formik";
-import dailyReportFormSchema from "../../helpers/schema/dailyReport";
+import dailyReportFormSchema from "@/helpers/schema/dailyReport";
 import { Add, CheckCircle } from "@mui/icons-material";
 
 interface propTypes {
@@ -84,15 +84,7 @@ const CreateDailyReportModal: FC<propTypes> = ({
             value={values.typingItem}
             onKeydown={addItemHandler}
           />
-          <IconButton
-            sx={{
-              bgcolor: "primary.main",
-              "&:hover": { bgcolor: "primary.dark" },
-              color: "common.white",
-            }}
-            size="small"
-            onClick={addItemHandler}
-          >
+          <IconButton sx={styles.addItem} size="small" onClick={addItemHandler}>
             <Add />
           </IconButton>
         </Box>
@@ -102,12 +94,7 @@ const CreateDailyReportModal: FC<propTypes> = ({
               <Box sx={styles.bullet} />
               <Typography
                 variant="caption"
-                sx={{
-                  "&:hover": {
-                    color: "error.main",
-                    cursor: "pointer",
-                  },
-                }}
+                sx={styles.itemTypography}
                 onClick={() => deleteItemHandler(item)}
               >
                 {item}
@@ -152,8 +139,19 @@ const styles = {
     bgcolor: "primary.main",
     opacity: ".75",
   },
-  item: { display: "flex", alignItems: "center", gap: "4px" },
+  addItem: {
+    bgcolor: "primary.main",
+    "&:hover": { bgcolor: "primary.dark" },
+    color: "common.white",
+  },
   items: { isplay: "flex", flexDirection: "column", gap: "10px" },
+  item: { display: "flex", alignItems: "center", gap: "4px" },
+  itemTypography: {
+    "&:hover": {
+      color: "error.main",
+      cursor: "pointer",
+    },
+  },
 };
 
 export default CreateDailyReportModal;

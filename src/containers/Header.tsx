@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { Button, Tabs } from "../components";
+import { Button, Tabs } from "@/components";
 import { Person } from "@mui/icons-material";
 import { FC } from "react";
 

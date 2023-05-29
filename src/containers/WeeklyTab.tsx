@@ -135,15 +135,7 @@ const WeeklyTab: FC<propTypes> = ({ userInfo }) => {
                 )}
               </Fragment>
             ))}
-            <Box
-              sx={{
-                display: "flex",
-                gap: "8px",
-                alignItems: "center",
-                justifyContent: "flex-end",
-                width: "100%",
-              }}
-            >
+            <Box sx={styles.dateBox}>
               <Typography sx={styles.date}>
                 {moment(String(startDate ?? moment())).format("jYYYY/jMM/jDD")}
               </Typography>
@@ -218,6 +210,13 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     gap: "4px",
+  },
+  dateBox: {
+    display: "flex",
+    gap: "8px",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    width: "100%",
   },
   date: {
     fontSize: "14px",

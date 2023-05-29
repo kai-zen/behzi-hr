@@ -2,9 +2,9 @@ import { ChangeEvent, FC, useState } from "react";
 import { Dialog, Box, Typography, Avatar } from "@mui/material";
 import { useFormik } from "formik";
 import { CheckCircle } from "@mui/icons-material";
-import { Button, TextInput } from "../components";
-import { userData } from "../helpers/types";
-import userInfoFormSchema from "../helpers/schema/userInfo";
+import { Button, TextInput } from "@/components";
+import { userData } from "@/helpers/types";
+import userInfoFormSchema from "@/helpers/schema/userInfo";
 
 interface propTypes {
   open: boolean;

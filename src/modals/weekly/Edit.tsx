@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Dialog, Box, Typography, IconButton } from "@mui/material";
-import { Button, TextInput } from "../../components";
+import { Button, TextInput } from "@/components";
 import { useFormik } from "formik";
-import dailyReportFormSchema from "../../helpers/schema/dailyReport";
+import dailyReportFormSchema from "@/helpers/schema/dailyReport";
 import { Add, CheckCircle } from "@mui/icons-material";
 import { weeklyReportType } from "@/helpers/types";
 
