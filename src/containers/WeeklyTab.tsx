@@ -196,7 +196,6 @@ const styles = {
     gap: "12px",
     p: "16px",
     width: "100%",
-    aspectRatio: "210 / 297",
   },
   printingHeader: {
     display: "flex",

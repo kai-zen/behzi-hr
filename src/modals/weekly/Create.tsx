@@ -133,7 +133,6 @@ const CreateWeeklyReportModal: FC<propTypes> = ({
             items={importanceLevels}
           />
         </Box>
-
         <Button
           type="submit"
           startIcon={<CheckCircle />}

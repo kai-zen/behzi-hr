@@ -56,7 +56,7 @@ const EditDailyReportModal: FC<propTypes> = ({
   return (
     <Dialog onClose={handleClose} open={open}>
       <Box component="form" onSubmit={handleSubmit} sx={styles.form}>
-        <Typography variant="h6">افزودن به گزارش روزانه</Typography>
+        <Typography variant="h6">ویرایش گزارش روزانه</Typography>
         <TextInput
           label="عنوان"
           name="title"
